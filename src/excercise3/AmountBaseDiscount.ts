@@ -1,6 +1,6 @@
 import Decimal from 'decimal.js-light'
 
-import { IAmountBaseDiscount } from  './Discount'
+import { IAmountBaseDiscount } from  './models/Discount'
 
 export default class AmountBaseDiscount implements IAmountBaseDiscount {
   private _description: string

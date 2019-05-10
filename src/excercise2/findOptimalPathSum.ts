@@ -5,7 +5,7 @@
  * Output: sum of the optimal path
  */
 
-import { IEdge, IVertices, IDirections } from './graphModel'
+import { IEdge, IVertices } from './graphModel'
 
 interface IDirections {
   [from: string]: string[]
@@ -47,25 +47,5 @@ const findOptimalPathSumByDirections = (vertices: IVertices, directions: IDirect
 const findOptimalPathSum = (vertices: IVertices, edges: IEdge[], origin: string): number => {
   return findOptimalPathSumByDirections(vertices, getDirectionsFromEdges(edges), origin, {})
 }
-
-const findOptimalPathSum2 = (vertices: IVertices, edges: IEdge[], origin: string): number => {
-  const ownWeight = vertices[origin]
-  
-  const nextPointsToVisit = edges.filter(edge => edge.from === origin).map(edge => edge.to)
-  if (nextPointsToVisit.length === 0) {
-    // when no point to visit, total weight is weight of the point itself
-    return ownWeight
-  }
-
-  // avoid infinite loop of cyclic graph by reduce edges that lead to visited point
-  // also reduce edges that used above
-  const nextEdgesCanGo = edges.filter(edge => edge.to !== origin && edge.from !== origin)
-
-  const possiblePathsSums = nextPointsToVisit.map(point => findOptimalPathSum(vertices, nextEdgesCanGo, point))
-
-  return ownWeight + Math.max(...possiblePathsSums)
-}
-
-export { findOptimalPathSum2 }
 
 export default findOptimalPathSum

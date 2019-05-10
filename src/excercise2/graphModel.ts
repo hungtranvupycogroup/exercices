@@ -7,4 +7,4 @@ interface IEdge {
   to: string
 }
 
-export { IVertices, IEdge, IDirections }
+export { IVertices, IEdge }

@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --verbose",
-    "test:coverage": "jest --coverage --verbose"
+    "test:coverage": "jest --coverage --verbose",
+    "start": "ts-node"
   },
   "dependencies": {
     "decimal.js-light": "^2.5.0",

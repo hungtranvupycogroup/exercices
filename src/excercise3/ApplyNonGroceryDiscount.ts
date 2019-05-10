@@ -1,5 +1,5 @@
-import { IItemDiscount } from "./Discount";
-import { IBillItem } from "./Bill";
+import { IItemDiscount } from "./models/Discount";
+import { IBillItem } from "./models/Bill";
 
 export default class ApplyNonGroceryDiscount implements IItemDiscount {
   constructor(private discount: IItemDiscount) {

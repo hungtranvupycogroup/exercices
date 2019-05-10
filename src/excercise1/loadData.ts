@@ -5,25 +5,6 @@
  */
 import { IData, IMap } from "./dataModel";
 
-const loadLineToMap = (line: string): IMap => {
-  const m: IMap = {}
-  line.split(';').forEach((entryText: string) => {
-    const [key, value] = entryText.split('=')
-    m[key] = value
-  })
-  return m
-}
-
-const loadBySplit = (text: string): IData => text.split('\n').map(
-  line => loadLineToMap(line)
-)
-
-const loadAsync = (text: string): Promise<IData> => Promise.all(text.split('\n').map(
-  async (line) => loadLineToMap(line)
-))
-
-const loadByJSON = (text: string): IData => JSON.parse(`[{"${text.replace(/\n/g, '"},{"').replace(/\;/g, '","').replace(/\=/g,'":"')}"}]`)
-
 const load = (text: string): IData => {
   const result:IData = []
   let key='', value=''
@@ -72,7 +53,5 @@ const load = (text: string): IData => {
   }
   return result
 }
-
-export { loadAsync, loadByJSON, loadBySplit }
 
 export default load

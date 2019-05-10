@@ -1,5 +1,3 @@
-import { IPercentageBaseDiscount, IAmountBaseDiscount } from "./Discount";
-
 interface IBillItem {
   name: string,
   isGrocery?: boolean

@@ -21,4 +21,8 @@ yarn test:coverage
 - storeData: store data to string, run from key-value to object to array, complexity is O(m**n**2)
 
 ## Exercise 2:
-- findOptimalPathSum: must travel all possible path to get maximum value, complexity is 
+- findOptimalPathSum: must travel all possible path to get maximum value, complexity is O(2^n)
+
+# Other notes
+## Exercise 3:
+- main function: Retail.getNetPayableAmount()
