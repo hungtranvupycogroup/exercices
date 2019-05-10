@@ -1,7 +1,7 @@
 import Decimal from 'decimal.js-light'
 
-import { IPercentageBaseDiscount } from  './Discount'
-import { IBillItem } from './Bill';
+import { IPercentageBaseDiscount } from  './models/Discount'
+import { IBillItem } from './models/Bill';
 
 export default class PercentageBaseDiscount implements IPercentageBaseDiscount {
   private _description: string
