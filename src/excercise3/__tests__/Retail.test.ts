@@ -1,5 +1,5 @@
 import Retail from '../Retail'
-import { IBill, IBillItem } from '../models/Bill';
+import { IBill } from '../models/Bill';
 
 jest.mock('moment', () => (t) => {
   const origin = require.requireActual('moment')
