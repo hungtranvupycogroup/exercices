@@ -5,47 +5,72 @@
  * Output: sum of the optimal path
  */
 
-import { IEdge, IVertices } from './graphModel'
+import { IEdge, IVertices,  } from './graphModel'
 
-interface IDirections {
-  [from: string]: string[]
+interface IAllBranchesVisitedSum {
+  [name: string]: number
 }
 
 interface IVisited {
   [name: string]: boolean
 }
 
-const getDirectionsFromEdges = (edges: IEdge[]): IDirections => {
-  const directions:IDirections = {}
-  edges.forEach(edge => {
-    if (!directions[edge.from]) {
-      directions[edge.from] = [edge.to]
-    } else {
-      directions[edge.from].push(edge.to)
-    }
-  })
-  return directions
-}
-
-const findOptimalPathSumByDirections = (vertices: IVertices, directions: IDirections, origin: string, visited: IVisited = {}) => {
-  const ownWeight = vertices[origin]
-  // avoid infinite loop of cyclic graph by ignore visited point
-  const nextPointsToVisit = directions[origin] ? directions[origin].filter(point => !visited[point]) : []
-  if (nextPointsToVisit.length === 0) {
-    // when no point to visit, total weight is weight of the point itself
-    return ownWeight
+class Graph {
+  vertices: IVertices
+  directions: {
+    [from: string]: string[]
   }
 
-  const possiblePathsSums = nextPointsToVisit.map(point => findOptimalPathSumByDirections(vertices, directions, point, {
-    ...visited,
-    [origin]: true
-  }))
+  constructor(vertices: IVertices, edges: IEdge[]) {
+    this.vertices = vertices
+    this.directions = {}
+    for (let edge of edges) {
+      if (!this.directions[edge.from]) {
+        this.directions[edge.from] = [edge.to]
+      } else {
+        this.directions[edge.from].push(edge.to)
+      }
+    }
+  }
 
-  return ownWeight + Math.max(...possiblePathsSums)
+  public findOptimalPathSum(origin: string, visited: IVisited = {}, visitedPrevSum: IAllBranchesVisitedSum = {}) {
+    const ownWeight = this.vertices[origin]
+    const currentSum = visitedPrevSum[origin] ? visitedPrevSum[origin] + ownWeight : ownWeight
+
+    if (!this.directions[origin]) {
+      // when no point to visit: total weight is sum of prevMax and the current point's weight
+      return currentSum
+    }
+
+    const optimalSums: number[] = [currentSum] // weight is positive, so currentSum will be safe to use for all skipping cases below
+
+    const nextVisited = { // visited is immutable
+      ...visited,
+      [origin]: true
+    }
+    for (let nextPoint of this.directions[origin]) {
+      // each nextPoint create a different path
+      if (visited[nextPoint]) {
+        // if next point is visited by this current path: skip to go further
+        continue
+      }
+
+      if (visitedPrevSum[nextPoint] && visitedPrevSum[nextPoint] >= currentSum) {
+        // if next point already visited with other bigger or equal paths: skip to go further
+        continue
+      }
+
+      visitedPrevSum[nextPoint] = currentSum
+      optimalSums.push(this.findOptimalPathSum(nextPoint, nextVisited, visitedPrevSum))
+    }
+
+    return Math.max(...optimalSums)
+  }
 }
 
 const findOptimalPathSum = (vertices: IVertices, edges: IEdge[], origin: string): number => {
-  return findOptimalPathSumByDirections(vertices, getDirectionsFromEdges(edges), origin, {})
+  const graph = new Graph(vertices, edges)
+  return graph.findOptimalPathSum(origin)
 }
 
 export default findOptimalPathSum
