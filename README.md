@@ -20,7 +20,7 @@ yarn test:coverage
 ## Time and memory complexity analysis
 ### Exercise 1:
 - loadData: read string char by char to construct data, no re-loop, complexity is O(n)
-- storeData: store data to string, run from key-value to object to array, complexity is O(m**n**2)
+- storeData: store data to string, run from key-value to object to array, complexity is O(m\*n)
 
 ### Exercise 2:
 - findOptimalPathSum: must travel all possible path to get maximum value, complexity is O(2^n)
