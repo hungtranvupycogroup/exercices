@@ -23,7 +23,7 @@ yarn test:coverage
 - storeData: store data to string, run from key-value to object to array, complexity is O(m\*n)
 
 ### Exercise 2:
-- findOptimalPathSum: must travel all possible path to get maximum value, complexity is O(2^n)
+- findOptimalPathSum: must travel all possible vertices and edges to get maximum value, complexity is O(v\*e)
 
 ## Other notes
 ### Exercise 3:
