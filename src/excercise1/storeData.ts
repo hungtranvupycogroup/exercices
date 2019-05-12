@@ -5,7 +5,9 @@
  */
 import {IData, IMap} from './dataModel'
 
-const storeMap = (m: IMap):string => Object.entries(m).map(([key, value]) => `${key}=${value}`).join(';')
+const storeKeyVal = ([key, value]: [string, string]) => `${key}=${value}`
+
+const storeMap = (m: IMap):string => Object.entries(m).map(storeKeyVal).join(';')
 
 const store = (a:IData):string => a.map(storeMap).join('\n')
 
